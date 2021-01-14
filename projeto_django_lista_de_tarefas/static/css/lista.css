@@ -1,0 +1,51 @@
+.cabecalho{
+    margin-bottom: 40px;
+}
+
+.titulo{
+    text-align: center;
+    padding-top: 30px;
+}
+
+.titulo-tarefa{
+    font-size: 20px;
+    display: inline-block;
+}
+
+.prazo-tarefa{
+    font-size: 15px;
+    float:right;
+}
+
+.tarefa{
+    vertical-align: middle;
+}
+.fonte-titulo{
+    font-family: 'Candal', sans-serif;
+
+}
+
+.botao{
+    display: inline-block;
+    
+}
+.card-largura{
+    /* "max-width: 18rem" impede que o card ultrapasse a largura de 18rem e seja esticado */
+    max-width: 18rem;
+}
+.card-posicao-imagem{
+    /* "object-fit: cover" faz a cobrir o espaço elemento pai sem se distorcer */
+    object-fit: cover;
+    height: 200px;
+}
+
+.prazo-lista{
+    font-size: 14px;
+}
+
+.footerp {
+    position: fixed;
+    bottom:0;
+    left:0;
+    width: 100%;
+}

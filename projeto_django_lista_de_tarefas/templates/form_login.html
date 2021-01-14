@@ -1,0 +1,71 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/lista.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Candal&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/form_cadastro.css' %}">
+    <title>Criar Conta</title>
+
+</head> 
+<body class="bg-color bg-light">
+    <div class="container-fluid bg-light">
+        <main>
+            <div class="card border-info mb-3 posicao" style="max-width: 18rem;">
+                <div class="card-body text-info">
+                    <h5 class="card-title">Login</h5>
+                    <form action="{% url 'login' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form.visible_fields %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field | add_class:'form-control' | add_required_class:"is-required" }}
+                            </div>  
+                            {% for error in field.errors %}
+                                <section class="alert-danger" role="alert">
+                                    {{ field.errors }}
+                                </section>
+                            {% endfor %}
+                        {% endfor %}
+
+
+
+
+
+
+                        <!-- <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome" name="usuario_nome"
+                                placeholder="Insira seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="usuario_email" class="form-control"
+                                placeholder="Digite seu endereço de email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" class="form-control" name="usuario_senha"
+                                placeholder="Digite sua senha" required>
+                        </div> -->
+
+                        <footer class="footer d-flex justify-content-end">
+                            <a type="button" href="{% url 'cadastrar' %}" class="btn btn-secondary"
+                                data-dismiss="modal">Criar Conta</a>
+                            <button type="submit" class="btn btn-primary " name="submit" value="submit">Login</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

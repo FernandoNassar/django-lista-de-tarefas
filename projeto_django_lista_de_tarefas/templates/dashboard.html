@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Candal&display=swap" rel="stylesheet">
+    <title>Lista de Tarefas</title>
+</head>
+
+<body>
+    {% include './partials/_navbar.html' %}
+
+    <main class="container-fluid bg-light">
+
+        <div class="area-titulo">
+            <h1 class="titulo fonte-titulo">Listas</h1>
+        </div>
+
+        <!--################################################### CARDS ############################################################################################-->
+        <section class="container-sm container-md container-lg container-xl bg-light" id="cards">
+            <div class="row justify-content-center">
+
+
+                {% for lista in listas %}
+                <article class="card card-largura p-0 m-4 col-12 col-md-4 col-lg-4 col-xl-4">
+                    {% if lista.imagem == '' %}
+                    <img src="{% static 'img/list_image.png' %}" class="card-img-top card-posicao-imagem"
+                        alt="...">
+                    {% else %}
+                    <img src="{{ lista.imagem.url }}" class="card-img-top card-posicao-imagem"
+                        alt="...">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-capitalize titulo_card text-truncate">{{ lista.nome }}</h5>
+                        {% if lista.prazo != None %}
+                        <p class="prazo-lista">Prazo: {{ lista.prazo }}</p>
+                        {% else %}
+                        <p class="prazo-lista">Sem Prazo</p>
+                        {% endif %}
+                    
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'lista' lista.id %}" class="btn btn-primary">Tarefas</a>
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <img src="{% static 'img/settings-tool.png' %}">
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item"
+                                        href="####">Editar</a>
+                                    <a class="dropdown-item" href="####">Excluir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- Modal - Criar Lista -->
+    <div class="modal fade" id="modal-criar-lista" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <dialog class="modal-content">
+                <header class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Lista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </header>
+
+                <main class="modal-body">
+                    <form action="{% url 'nova_lista' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Título</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" name="nome_lista"
+                                placeholder="Insira o título da lista" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Prazo</label>
+                            <input id="date" class="form-control" name="prazo_lista" type="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Descrição</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="desc_lista" rows="3"
+                                placeholder="Dê uma descrição"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="imagem">Imagem</label>
+                            <input type="file" class="form-control-file" id="imagem" name="imagem_lista" value="">
+                        </div>
+
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn botao-cor-especial" name="submit"
+                                value="submit">Enviar</button>
+                        </footer>
+
+                    </form>
+                </main>
+
+
+
+            </dialog>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
