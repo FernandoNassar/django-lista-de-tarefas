@@ -42,6 +42,31 @@ def exclui_lista(request, lista_id):
     else:
         return redirect('login')
 
+
+def editar_lista(request):
+    if request.user.is_authenticated:  
+        if request.method == 'POST':
+            lista = get_object_or_404(Lista, pk=request.POST['lista_id'])
+            if lista.usuario.id == request.user.id:
+                lista.desc = request.POST['lista_desc']
+                if not request.POST['lista_nome'].isspace():
+                    lista.nome = request.POST['lista_nome']
+                if request.POST['lista_prazo'] != '':
+                    lista.prazo = request.POST['lista_prazo']
+                else:
+                    lista.prazo = None
+                if 'lista_imagem' in request.FILES:
+                    lista.imagem = request.FILES['lista_imagem']
+                lista.save()
+                return redirect('lista', request.POST['lista_id'])
+            else:
+                return redirect('dashboard')
+        else:
+            return redirect('dashboard')
+    else:
+        return redirect('login')
+
+
 #def index(request):
 #    if request.user.is_authenticated:
 #        pass

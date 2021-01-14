@@ -31,8 +31,8 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-criar-tarefa">Adicionar
                     Tarefa</a>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-editar-lista">Editar Lista</a>
-                <a class="dropdown-item" href="#">Excluir Lista</a>
+                <a class="dropdown-item" href="####" data-toggle="modal" data-target="#modal-editar-lista">Editar Lista</a>
+                <a class="dropdown-item" href="{% url 'remover_lista' lista.id %}">Excluir Lista</a>
             </div>
         </div>
 
@@ -170,7 +170,7 @@
                 </header>
 
                 <main class="modal-body">
-                    <form action="####" method="POST" enctype="multipart/form-data">
+                    <form action="{% url 'editar_lista' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="hidden" name="lista_id" value="{{ lista.id }}">
                         <div class="form-group">
