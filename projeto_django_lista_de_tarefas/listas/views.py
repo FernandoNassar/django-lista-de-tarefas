@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Lista, Tarefa
 from django.contrib.auth.models import User
 
@@ -31,6 +31,16 @@ def exibe_lista(request, lista_id):
         return render(request, 'lista.html', dados)
     else:
         return redirect('/login')
+
+
+def exclui_lista(request, lista_id):
+    if request.user.is_authenticated:
+        lista = get_object_or_404(Lista, pk=lista_id)
+        if lista.usuario.id == request.user.id:
+            lista.delete()
+        return redirect('dashboard')
+    else:
+        return redirect('login')
 
 #def index(request):
 #    if request.user.is_authenticated:
