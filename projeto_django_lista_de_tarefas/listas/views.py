@@ -26,7 +26,8 @@ def cria_lista(request):
 def exibe_lista(request, lista_id):
     if request.user.is_authenticated:
         lista = Lista.objects.get(pk=lista_id)
-        tarefas = Tarefa.objects.order_by('-data_criacao').filter(lista=lista_id)
+        tarefas = Tarefa.objects.order_by(
+            '-data_criacao').filter(lista=lista_id)
         dados = {'lista': lista, 'tarefas': tarefas}
         return render(request, 'lista.html', dados)
     else:
@@ -44,7 +45,7 @@ def exclui_lista(request, lista_id):
 
 
 def editar_lista(request):
-    if request.user.is_authenticated:  
+    if request.user.is_authenticated:
         if request.method == 'POST':
             lista = get_object_or_404(Lista, pk=request.POST['lista_id'])
             if lista.usuario.id == request.user.id:
@@ -67,7 +68,44 @@ def editar_lista(request):
         return redirect('login')
 
 
-#def index(request):
+def editar_lista_dashboard(request, lista_id):
+    if request.user.is_authenticated:
+        lista = get_object_or_404(Lista, pk=lista_id)
+        if lista.usuario.id == request.user.id: 
+            return render(request, 'form_editar_lista.html', {'lista': lista})
+        return redirect('dashboard')
+    else:
+        return redirect('login')
+
+
+def atualizar_lista_dashboard(request):
+    if request.user.is_authenticated:
+        lista = get_object_or_404(Lista, pk=request.POST['lista_id'])
+        lista.desc = request.POST['lista_desc']
+        if not request.POST['lista_nome'].isspace():
+            lista.nome = request.POST['lista_nome']
+            if request.POST['lista_prazo'] != '':
+                lista.prazo = request.POST['lista_prazo']
+            else:
+                lista.prazo = None
+            if 'lista_imagem' in request.FILES:
+                lista.imagem = request.FILES['lista_imagem']
+
+            lista.save()
+            return redirect('dashboard')
+        else:
+            return redirect('editar_lista_dashboard', request.POST['lista_id'])
+    else:
+        return redirect('login')
+
+
+
+
+
+
+
+
+# def index(request):
 #    if request.user.is_authenticated:
 #        pass
 #    return redirect('usuario/login')

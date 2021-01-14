@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,39 +15,36 @@
     {% include './partials/_navbar.html' %}
 
     <main>
-        <form class="container" method="POST" action="{% url 'editar_lista' %}" enctype="multipart/form-data">
+        <form class="container" method="POST" action="{% url 'atualizar_lista' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <header>
-              <h1 class="titulo">Título</h5>
+              <h1 class="titulo">Editar Lista</h1>
             </header>
 
             <input type="hidden" name="lista_id" value="{{ lista.id }}">
 
             <div class="row">
                 <div class="form-group col">
-                    <label for="titulo">Titulo</label>
-                    <input type="text" class="form-control" id="titulo" name="lista_nome" value="" required>
+                    <label for="titulo">Título</label>
+                    <input type="text" class="form-control" id="titulo" name="lista_nome" value="{{lista.nome}}" required>
                 </div>
                 <div class="form-group col">
                     <label for="exampleFormControlInput1">Prazo</label>
-                    <input id="date" class="form-control" name="prazo_lista" type="date" value="{{lista.prazo|date:'Y-m-d'}}">
+                    <input id="date" class="form-control" name="lista_prazo" type="date" value="{{lista.prazo|date:'Y-m-d'}}">
                 </div>
             </div>            
             
             <div class="form-group">
                 <label for="desc">Descrição</label>
-                <textarea class="form-control" id="desc" rows="3" name="desc_lista">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <textarea class="form-control" id="desc" rows="3" name="lista_desc">
+                    {{lista.desc}}
                 </textarea>
             </div>
             
 
             <div class="form-group">
                 <label for="imagem">Imagem</label>
-                <input type="file" class="form-control-file" id="imagem" name="imagem_lista" value="{{lista.imagem}}">
+                <input type="file" class="form-control-file" id="imagem" name="lista_imagem" value="">
             </div>
       
             
