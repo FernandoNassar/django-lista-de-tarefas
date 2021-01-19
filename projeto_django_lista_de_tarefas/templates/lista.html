@@ -48,22 +48,25 @@
                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                             data-target="#tarefa{{tarefa.id}}" aria-expanded="false" aria-controls="collapseOne">
                             <div class="tarefa">
+                                {% if tarefa.finalizado == True %}
+                                <h2 class="titulo-tarefa">{{tarefa.nome}} (finalizado)</h2>
+                                {% else %}
                                 <h2 class="titulo-tarefa">{{tarefa.nome}}</h2>
-                                <!-- {% if tarefa.prazo %} -->
-                                <p class="prazo-tarefa">Prazo: {{tarefa.prazo}}</p>
-                                <!-- {% endif %} -->
+                                {% endif %}
                             </div>
                         </button>
                     </h2>
                 </div>
-                
                 <div id="tarefa{{tarefa.id}}" class="collapse" data-parent="#accordionExample">
                     <div class="card-body">
+
+                        <h3>Prazo: {{tarefa.prazo}}</h3>
                         <p>{{tarefa.desc}}</p>
+                        
                         <div class="d-flex justify-content-end">
-                            <a class="btn btn-success  m-1" href="####">Concluir</a>
+                            <a class="btn btn-success  m-1" href="{% url 'finalizar_tarefa' tarefa.id %}">Concluir</a>
                             <a class="btn btn-info m-1" href="####">Editar</a>
-                            <a class="btn btn-danger m-1" href="####">Excluir</a>
+                            <a class="btn btn-danger m-1" href="{% url 'remover_tarefa' tarefa.id %}">Excluir</a>
                         </div>
                     </div>
                 </div>

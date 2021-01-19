@@ -119,6 +119,33 @@ def cria_tarefa(request):
         return redirect('login')
 
 
+def remove_tarefa(request, tarefa_id):
+    if request.user.is_authenticated:
+        tarefa = get_object_or_404(Tarefa, pk=tarefa_id)
+        lista_id = tarefa.lista.id
+        if tarefa.lista.usuario.id == request.user.id:
+            tarefa.delete()
+            return redirect('lista', lista_id)
+        else:
+            return redirect('lista', lista_id)
+    else:
+        return redirect('login')
+
+
+def finalizar_tarefa(request, tarefa_id):
+    if request.user.is_authenticated:
+        tarefa = get_object_or_404(Tarefa, pk=tarefa_id)
+        lista_id = tarefa.lista.id 
+        if tarefa.lista.usuario.id == request.user.id:
+            tarefa.finalizado = True
+            tarefa.save()
+            return redirect('lista', lista_id)
+        else:
+            return redirect('lista', lista_id)
+    else:
+        return redirect('login')
+
+            
 
 
 
