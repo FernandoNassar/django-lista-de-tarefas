@@ -26,8 +26,7 @@ def cria_lista(request):
 def exibe_lista(request, lista_id):
     if request.user.is_authenticated:
         lista = Lista.objects.get(pk=lista_id)
-        tarefas = Tarefa.objects.order_by(
-            '-data_criacao').filter(lista=lista_id)
+        tarefas = Tarefa.objects.order_by('-data_criacao').filter(lista=lista_id)
         dados = {'lista': lista, 'tarefas': tarefas}
         return render(request, 'lista.html', dados)
     else:
@@ -99,6 +98,25 @@ def atualizar_lista_dashboard(request):
         return redirect('login')
 
 
+def cria_tarefa(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            tarefa = Tarefa()
+            if request.POST['tarefa_nome'].isspace():
+                return redirect('lista', request.POST['lista_id'])
+            else:
+                tarefa.lista = Lista.objects.get(pk=request.POST['lista_id'])
+                tarefa.nome = request.POST['tarefa_nome']
+                if 'tarefa_desc' in request.POST:
+                    tarefa.desc = request.POST['tarefa_desc']
+                if request.POST['tarefa_prazo'] != '':
+                    tarefa.prazo = request.POST['tarefa_prazo']
+                tarefa.save()
+                return redirect('lista', request.POST['lista_id'])
+        else:
+            return redirect('dashboard')
+    else:
+        return redirect('login')
 
 
 

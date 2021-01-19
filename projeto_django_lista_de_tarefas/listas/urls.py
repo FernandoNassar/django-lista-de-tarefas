@@ -9,6 +9,7 @@ urlpatterns = [
     path('editar_lista', views.editar_lista, name='editar_lista'),
     path('editar_lista_dashboard/<int:lista_id>', views.editar_lista_dashboard, name='editar_lista_dashboard'),
     path('atualizar_lista', views.atualizar_lista_dashboard, name='atualizar_lista'),
+    path('nova_tarefa', views.cria_tarefa, name='nova_tarefa'),
     #path('', views.index, name='index'),
     #path('cadastrar', views.cadastrar, name='cadastrar'),
     #path('login', views.login, name='login'),

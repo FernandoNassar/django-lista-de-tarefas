@@ -46,24 +46,20 @@
                 <div class="card-header">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                            data-target="#{{tarefa.id}}" aria-expanded="false" aria-controls="collapseOne">
+                            data-target="#tarefa{{tarefa.id}}" aria-expanded="false" aria-controls="collapseOne">
                             <div class="tarefa">
-                                <h2 class="titulo-tarefa">Nome da Tarefa
-                                    (finalizado)
-                                </h2>
-                           
-                                <p class="prazo-tarefa">Prazo: 00/00/0000</p>
+                                <h2 class="titulo-tarefa">{{tarefa.nome}}</h2>
+                                <!-- {% if tarefa.prazo %} -->
+                                <p class="prazo-tarefa">Prazo: {{tarefa.prazo}}</p>
+                                <!-- {% endif %} -->
                             </div>
                         </button>
                     </h2>
                 </div>
                 
-                <div id="{{tarefa.id}}" class="collapse" data-parent="#accordionExample">
+                <div id="tarefa{{tarefa.id}}" class="collapse" data-parent="#accordionExample">
                     <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p>{{tarefa.desc}}</p>
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-success  m-1" href="####">Concluir</a>
                             <a class="btn btn-info m-1" href="####">Editar</a>
@@ -221,7 +217,7 @@
                 </header>
 
                 <main class="modal-body">
-                    <form action="####" method="POST" enctype="multipart/form-data">
+                    <form action="{% url 'nova_tarefa' %}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="hidden" value="{{ lista.id }}" name="lista_id">
                         <div class="form-group">
