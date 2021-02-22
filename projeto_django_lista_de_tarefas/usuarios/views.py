@@ -2,13 +2,15 @@ from django.shortcuts import render, redirect
 from usuarios.forms.forms import UserFormCadastro, UserFormLogin
 from django.contrib.auth.models import User
 from django.contrib import auth
-from listas.models import Lista
+from listas.models import Lista, Tarefa
+from .funcs.funcs import finaliza_lista
+from django.core.paginator import Paginator
 
 def index(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
-    else:
-        return redirect('login')
+    return redirect('login')
+
 
 def cadastrar(request):
     if request.method == 'POST':
@@ -26,7 +28,6 @@ def cadastrar(request):
         else:
             contexto = {'form': form}
             return render(request, 'form_cadastro.html', contexto)
-
 
     contexto = {'form': UserFormCadastro()}
     return render(request, 'form_cadastro.html', contexto)
@@ -51,7 +52,6 @@ def login(request):
             contexto = {'form': form}
             return render(request, 'form_login.html', contexto)
 
-
     contexto = {'form': UserFormLogin()}
     return render(request, 'form_login.html', contexto)
 
@@ -65,9 +65,14 @@ def dashboard(request):
     if request.user.is_authenticated:
         usuario_id = request.user.id 
         listas = Lista.objects.order_by('-data_criacao').filter(usuario=usuario_id)
+        listas = finaliza_lista(listas)
+
+        paginator = Paginator(listas, 9)
+        page = request.GET.get('page')
+        listas = paginator.get_page(page) 
+
         dados = {'listas': listas}
         return render(request, 'dashboard.html', dados)
-    else:
-        return redirect('login')
+    return redirect('login')
 
 

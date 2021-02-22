@@ -1,0 +1,45 @@
+{% load static %}
+<!-- Modal - Criar Lista -->
+<div class="modal fade" id="modal-criar-lista" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <dialog class="modal-content">
+            <header class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nova Lista</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </header>
+
+            <main class="modal-body">
+                <form action="{% url 'nova_lista' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Título</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" name="nome_lista"
+                            placeholder="Insira o título da lista" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Prazo</label>
+                        <input id="date" class="form-control" name="prazo_lista" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Descrição</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="desc_lista" rows="3"
+                            placeholder="Dê uma descrição"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagem">Imagem</label>
+                        <input type="file" class="form-control-file" id="imagem" name="imagem_lista" value="">
+                    </div>
+
+                    <footer class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn botao-cor-especial" name="submit"
+                            value="submit">Enviar</button>
+                    </footer>
+
+                </form>
+            </main>
+        </dialog>
+    </div>
+</div>

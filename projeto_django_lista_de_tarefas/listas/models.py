@@ -10,6 +10,7 @@ class Lista(models.Model):
     prazo = models.DateField(blank=True, null=True)
     data_criacao = models.DateField(auto_now_add=True)
     imagem = models.ImageField(upload_to='imagens/%d/%m/%Y', blank=True, null=True)
+    finalizado = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nome

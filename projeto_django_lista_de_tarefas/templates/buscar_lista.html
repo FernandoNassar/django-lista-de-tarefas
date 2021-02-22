@@ -25,35 +25,32 @@
         <section class="container-sm container-md container-lg container-xl bg-light" id="cards">
             <div class="row justify-content-center">
 
-
                 {% for lista in listas %}
                 <article class="card card-largura p-0 m-4 col-12 col-md-4 col-lg-4 col-xl-4">
                     {% if lista.imagem == '' %}
-                    <img src="{% static 'img/list_image.png' %}" class="card-img-top card-posicao-imagem" alt="...">
+                    <img src="img/teste.png" class="card-img-top card-posicao-imagem"
+                        alt="...">
                     {% else %}
-                    <img src="{{ lista.imagem.url }}" class="card-img-top card-posicao-imagem" alt="...">
+                    <img src="{{lista.imagem.url}}" class="card-img-top card-posicao-imagem"
+                        alt="...">
                     {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title text-capitalize titulo_card text-truncate">{{ lista.nome }}</h5>
-                        
-                        {% if lista.finalizado == True %}
-                        <p class="prazo-lista">Status: Concluído</p>
-                        {% else %}
-                        <p class="prazo-lista">Status: Em andamento</p>
+                        <h5 class="card-title text-capitalize titulo_card text-truncate">{{lista.nome}}</h5>
+                        {% if lista.prazo != None %}
+                        <p class="prazo-lista">Prazo: {{lista.prazo}}</p>
                         {% endif %}
-
                         <div class="d-flex justify-content-between">
-                            <a href="{% url 'lista' lista.id %}" class="btn btn-primary">Tarefas</a>
+                            <a href="#" class="btn btn-primary">Tarefas</a>
                             <div class="dropdown">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    <img src="{% static 'img/settings-tool.png' %}">
+                                    Ações
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item"
-                                        href="{% url 'editar_lista_dashboard' lista.id %}">Editar</a>
-                                    <a class="dropdown-item" href="{% url 'remover_lista' lista.id %}">Excluir</a>
+                                        href="####">Editar</a>
+                                    <a class="dropdown-item" href="####">Excluir</a>
                                 </div>
                             </div>
                         </div>
@@ -62,55 +59,12 @@
                 {% endfor %}
             </div>
         </section>
-
-        
-        
-            <nav class="d-flex justify-content-center" aria-label="Page navigation example">
-                <ul class="pagination">
-                    
-                    {% if listas.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ listas.previous_page_number }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    
-                    <li class="page-item active"><a class="page-link" href="?page={{listas.number}}">{{listas.number}}</a></li>
-                    
-                    {% if listas.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ listas.next_page_number }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item">
-                        <a class="page-link disabled" href="" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </nav>
-        
-
-        <footer class="mt-5">
-            <p class="d-flex justify-content-center">Lista de Tarefas</p>
-        </footer>
-
     </main>
 
-
+    {% include './partials/_modal_criar_lista.html' %}
 
     <!-- Modal - Criar Lista -->
-    <div class="modal fade" id="modal-criar-lista" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="modal-criar-lista" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <dialog class="modal-content">
                 <header class="modal-header">
@@ -137,10 +91,6 @@
                             <textarea class="form-control" id="exampleFormControlTextarea1" name="desc_lista" rows="3"
                                 placeholder="Dê uma descrição"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="imagem">Imagem</label>
-                            <input type="file" class="form-control-file" id="imagem" name="imagem_lista" value="">
-                        </div>
 
                         <footer class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -150,9 +100,14 @@
 
                     </form>
                 </main>
+
+
+
             </dialog>
         </div>
-    </div>
+    </div> -->
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
